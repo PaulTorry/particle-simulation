@@ -7,8 +7,15 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
+            "name": "noah",
             "url": "C:\\Users\\dnlry\\OneDrive\\Documents\\GitHub\\particle-simulation",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "paul",
+            "url": "C:\\Users\\paul_\\Documents\\GitHub\\particle-simulation\\src\\simulation.html",
             "webRoot": "${workspaceFolder}"
         }
     ]

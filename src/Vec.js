@@ -52,6 +52,13 @@ class Vec {
     dot(a) {
         return (a.x * this.x + a.y * this.y)
     }
+    bringInsideBounds(x2, y2, x1 = 0, y1 = 0){
+        let x = this.x - x1, xm = x2 - x1
+        let y = this.y - y1, ym = y2 - y1
+        // conssole.log(x2, x1, x, xm, this.x, ((this.x + xm) % xm) + x1 );
+
+       return new Vec(((x + xm) % xm) + x1, ((y + ym) % ym) + y1)
+    }
     static add(a, b) {
         return a.add(b)
     }
@@ -65,9 +72,5 @@ class Vec {
         return new Vec(1,0)
     }
 }
-let v = new Vec(0,0)
-console.log(v.power(-2))
-console.log(v.power(1))
-console.log(v.power(2))
-console.log(v.power(0.5))
-console.log(v.power(2).power(0.5))
+let v = new Vec(-99,99)
+console.log(v.bringInsideBounds(400, 400, -400, -400))
