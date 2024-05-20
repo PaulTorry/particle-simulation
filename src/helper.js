@@ -20,10 +20,11 @@ function calculateForces(a, s) {
 }
 function gravitationalPotential(g, s) {
   const r = s.subtract(g.s)
+  let effectiveDistance = (1/atomicRadius)*r.mag
   if (r.mag <= 1) {
     return 0
   }
-  return -g.mass * G / r.mag
+  return (1/5)*(effectiveDistance**-5)-(effectiveDistance**-1)
 }
 function gravitationalPotentials(a, s) {
   return a.reduce((p, c) => p + gravitationalPotential(c, s), 0)
