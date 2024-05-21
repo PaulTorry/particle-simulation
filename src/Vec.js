@@ -52,6 +52,9 @@ class Vec {
     dot(a) {
         return (a.x * this.x + a.y * this.y)
     }
+    bounds(xb, yb) {
+        
+    }
     static add(a, b) {
         return a.add(b)
     }

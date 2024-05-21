@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "C:\\Users\\dnlry\\OneDrive\\Documents\\GitHub\\particle-simulation",
+            "url": "C:\\Users\\dnlry\\OneDrive\\Documents\\GitHub\\particle-simulation\\src\\simulation.html",
             "webRoot": "${workspaceFolder}"
         }
     ]

@@ -5,7 +5,7 @@ let objects = []
 let lastTime = 0
 let atomicRadius = 50
 let heatingValue = 1.00
-grid = makeGrid(300, 100, 100)
+grid = makeGrid(200, 100, 500)
 for (const n of grid) {
     for (const m of grid) {
         objects.push(new Particle(new Vec(m, n), new Vec(0, 0)))
@@ -32,8 +32,11 @@ function draw() {
         dl.drawCircle(...o.s, 20, "white")
     })
     let kineticEnergy = objects.reduce((p, c, i) => p+c.kineticEnergy, 0)
+    let potentialEnergy = objects.reduce((p, c, i) => p+gravitationalPotentials(objects, c.s), 0)
     //console.log(kineticEnergy)
-    console.log(gravitationalPotentials(objects, new Vec(0,0)))
+    //console.log(gravitationalPotentials(objects, objects[0].s))
+    dl.fillText(kineticEnergy, 600, 600)
+    dl.fillText(potentialEnergy, 600, 650)
     }
 function updatePhysics(dt) {
     objects.forEach((o, i) => {
@@ -49,7 +52,7 @@ function update(t) {
     let dt = 0.1 / itt //(t - lastTime) / 50 //fix
     for (let i = 0; i < itt; i++) { updatePhysics(dt) }
     lastTime = t
-        setTimeout(update, 1)
+        setTimeout(update, 5)
         draw()
     }
 setTimeout(update, 1)

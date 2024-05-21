@@ -23,18 +23,18 @@ class Particle {
         this.historyCooldown -= dt / 0.05
     }
     checkBounds(bx, by) {
-        // TODO: fix corners
-        // const x = this.s.x
-        // const xx = (x + bx) % bx
-        // const y = this.s.y
-        // const yy = (y + by) % by
-        // this.s = new Vec(xx, yy)
-        if (this.s.x > bx - 20) { this.v = new Vec(Math.min(0, this.v.x), this.v.y) }
-        if (this.s.x < 20) { this.v = new Vec(Math.max(0, this.v.x), this.v.y) }
-        if (this.s.y > by - 20) { this.v = new Vec(this.v.x, Math.min(0, this.v.y)) }
-        if (this.s.y < 20) { this.v = new Vec(this.v.x, Math.max(0, this.v.y)) }
+        //TODO: fix corners
+        const x = this.s.x
+        const xx = (x + bx) % bx
+        const y = this.s.y
+        const yy = (y + by) % by
+        this.s = new Vec(xx, yy)
+        //if (this.s.x > bx - 20) { this.v = new Vec(Math.min(0, this.v.x), this.v.y) }
+        //if (this.s.x < 20) { this.v = new Vec(Math.max(0, this.v.x), this.v.y) }
+        //if (this.s.y > by - 20) { this.v = new Vec(this.v.x, Math.min(0, this.v.y)) }
+        //if (this.s.y < 20) { this.v = new Vec(this.v.x, Math.max(0, this.v.y)) }
     }
     get kineticEnergy() {
-        return 1 / 2 * this.mass * ((this.v).mag ** 2)
+        return 1 / 2 * this.mass * ((this.v).mag ** 2)/50
     }
 }
