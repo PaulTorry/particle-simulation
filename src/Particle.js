@@ -8,7 +8,7 @@ class Particle {
     }
     update(dt, gg) {
         this.s = this.s.add(this.v.scale(dt))
-        this.v = this.v.scale(heatingValue)
+        this.v = this.v.scale((heatingValue-1)*dt*100+1)
         this.v = this.v.add(gg.scale(dt))
         this.updateHistory(dt)
     }
@@ -24,17 +24,13 @@ class Particle {
     }
     checkBounds(bx, by) {
         //TODO: fix corners
-        const x = this.s.x
-        const xx = (x + bx) % bx
-        const y = this.s.y
-        const yy = (y + by) % by
-        this.s = new Vec(xx, yy)
+       this.s = this.s.bounds(bx, by)
         //if (this.s.x > bx - 20) { this.v = new Vec(Math.min(0, this.v.x), this.v.y) }
         //if (this.s.x < 20) { this.v = new Vec(Math.max(0, this.v.x), this.v.y) }
         //if (this.s.y > by - 20) { this.v = new Vec(this.v.x, Math.min(0, this.v.y)) }
         //if (this.s.y < 20) { this.v = new Vec(this.v.x, Math.max(0, this.v.y)) }
     }
     get kineticEnergy() {
-        return 1 / 2 * this.mass * ((this.v).mag ** 2)/50
+        return 1 / 50 * this.mass * ((this.v).mag ** 2)
     }
 }

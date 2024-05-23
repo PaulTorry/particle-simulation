@@ -23,6 +23,21 @@ document.addEventListener("keydown", (e) => {
         console.log(e.key)
         heatingValue = heatingValue - 0.001
     }
+    if(e.key === "1") {
+        console.log(e.key)
+        heatingValue = 0.99
+    }
+    if(e.key === "2") {
+        console.log(e.key)
+        heatingValue = 0.999
+    }
+    if(e.key === "3") {
+        console.log(e.key)
+        heatingValue = 1
+    }
+    if(e.key === "4") {
+        heatingValue = 1.001
+    }
 })
 draw()
 function draw() {
@@ -37,6 +52,7 @@ function draw() {
     //console.log(gravitationalPotentials(objects, objects[0].s))
     dl.fillText(kineticEnergy, 600, 600)
     dl.fillText(potentialEnergy, 600, 650)
+    dl.fillText(kineticEnergy+potentialEnergy, 600, 700)
     }
 function updatePhysics(dt) {
     objects.forEach((o, i) => {
@@ -48,7 +64,7 @@ function updatePhysics(dt) {
     )
 }
 function update(t) {
-    let itt = 10
+    let itt = 100
     let dt = 0.1 / itt //(t - lastTime) / 50 //fix
     for (let i = 0; i < itt; i++) { updatePhysics(dt) }
     lastTime = t
