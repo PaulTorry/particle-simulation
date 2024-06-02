@@ -4,12 +4,21 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "C:\\Users\\dnlry\\OneDrive\\Documents\\GitHub\\particle-simulation\\src\\simulation.html",
             "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "p",
+            "url": "C:\\Users\\paul_\\Documents\\GitHub\\particle-simulation\\src\\simulation.html",
+            "webRoot": "${workspaceFolder}"
         }
+
     ]
 }
