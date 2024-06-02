@@ -53,8 +53,12 @@ class Vec {
         return (a.x * this.x + a.y * this.y)
     }
     bounds(xb, yb) {
-        
-    }
+        const x = this.x
+        const xx = (x + xb) % xb
+        const y = this.y
+        const yy = (y + yb) % yb
+        return new Vec(xx, yy)
+      }
     static add(a, b) {
         return a.add(b)
     }
