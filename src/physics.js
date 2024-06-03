@@ -44,6 +44,11 @@ function draw() {
     dl.reset()
     let offset = objects[0].s.scale(-1).add(screenSize.scale(0.5))
     objects.forEach((o, i) => {
+        for (const n of [-1,0,1]) {
+            for (const m of [-1,0,1]) {
+                dl.drawCircle(...o.s.addXY(n*800, m*800), 20, "grey")
+            }
+        }
         dl.drawCircle(...o.s, 20, "white")
     })
     let kineticEnergy = objects.reduce((p, c, i) => p+c.kineticEnergy, 0)
@@ -64,7 +69,7 @@ function updatePhysics(dt) {
     )
 }
 function update(t) {
-    let itt = 100
+    let itt = 200
     let dt = 0.1 / itt //(t - lastTime) / 50 //fix
     for (let i = 0; i < itt; i++) { updatePhysics(dt) }
     lastTime = t

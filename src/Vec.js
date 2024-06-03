@@ -23,10 +23,10 @@ class Vec {
         return new Vec(this.x * s, this.y * s)
     }
     power(p) {
-        if(this.mag < 0.0000000000001) {
-            return new Vec(0,0)
+        if (this.mag < 0.0000000000001) {
+            return new Vec(0, 0)
         }
-        return this.unit.scale(this.mag**p)
+        return this.unit.scale(this.mag ** p)
     }
     rotate(th) {
         return new Vec(this.x * Math.cos(th) - this.y * Math.sin(th), this.y * Math.cos(th) + this.x * Math.sin(th))
@@ -35,8 +35,8 @@ class Vec {
         return (this.x * a.y) - (a.x * this.y)
     }
     get unit() {
-        if(this.mag < 0.0000000000001) {
-            return new Vec(0,0)
+        if (this.mag < 0.0000000000001) {
+            return new Vec(0, 0)
         }
         return this.scale(1 / this.mag)
     }
@@ -58,7 +58,15 @@ class Vec {
         const y = this.y
         const yy = (y + yb) % yb
         return new Vec(xx, yy)
-      }
+    }
+
+    bringInsideBounds(x2, y2, x1 = 0, y1 = 0) {
+        let x = this.x - x1, xm = x2 - x1
+        let y = this.y - y1, ym = y2 - y1
+
+        return new Vec(((x + xm) % xm) + x1, ((y + ym) % ym) + y1)
+    }
+
     static add(a, b) {
         return a.add(b)
     }
@@ -66,13 +74,13 @@ class Vec {
         return new Vec(0, 0)
     }
     static random(l = 1) {
-        return new Vec(l,0).rotate(Math.random()*Math.PI*2)
+        return new Vec(l, 0).rotate(Math.random() * Math.PI * 2)
     }
     static east() {
-        return new Vec(1,0)
+        return new Vec(1, 0)
     }
 }
-let v = new Vec(0,0)
+let v = new Vec(0, 0)
 console.log(v.power(-2))
 console.log(v.power(1))
 console.log(v.power(2))

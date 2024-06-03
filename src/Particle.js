@@ -8,9 +8,14 @@ class Particle {
     }
     update(dt, gg) {
         this.s = this.s.add(this.v.scale(dt))
-        this.v = this.v.scale((heatingValue-1)*dt*100+1)
+        // this.v = this.v.scale((heatingValue-1)*dt*100+1)  
+        this.v = this.increaseKE((heatingValue-1)*dt*0)        
         this.v = this.v.add(gg.scale(dt))
         this.updateHistory(dt)
+    }
+    increaseKE(dKE){
+        console.log(this.v, this.kineticEnergy, this.v.unit.scale(Math.sqrt(2*this.kineticEnergy/this.mass)))
+        return this.v.unit.scale(Math.sqrt(2*this.kineticEnergy/this.mass))
     }
     updateHistory(dt) {
         if (this.historyCooldown <= 0) {

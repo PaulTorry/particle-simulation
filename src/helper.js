@@ -2,7 +2,7 @@ function arrayPairs(arr) {
   return arr.map((v, i, a) => [a.at(i - 1), a.at(i)])
 }
 function calculateForce(g, s) {
-  const r = s.subtract(g.s)
+  const r = s.subtract(g.s).bringInsideBounds(...screenSize.scale(0.5), ...screenSize.scale(-0.5))
   let attraction;
   let repulsion;
   let effectiveDistance;
@@ -19,7 +19,7 @@ function calculateForces(a, s) {
   return a.reduce((p, c) => p.add(calculateForce(c, s)), new Vec(0, 0))
 }
 function gravitationalPotential(g, s) {
-  const r = s.subtract(g.s)
+  const r = s.subtract(g.s).bringInsideBounds(...screenSize.scale(0.5), ...screenSize.scale(-0.5))
   let effectiveDistance = (1/atomicRadius)*r.mag
   if (r.mag <= 1) {
     return 0
