@@ -64,7 +64,7 @@ function updatePhysics(dt) {
     )
 }
 function update(t) {
-    let itt = 100
+    let itt = 250
     let dt = 0.1 / itt //(t - lastTime) / 50 //fix
     for (let i = 0; i < itt; i++) { updatePhysics(dt) }
     lastTime = t
