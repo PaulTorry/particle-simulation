@@ -44,10 +44,14 @@ function split(a, si, fi) {
   let aa = a.concat(a)
   return [aa.slice(si, fi + 1), aa.slice(fi, a.length + si + 1)]
 }
-function makeGrid(interval, start, finish) {
+function makeGrid(interval, start, finish, removePadding) {
   let s = Math.floor(start/interval)
   let f = Math.ceil(finish/interval)
-  let grid = [...Array(f-s+1).keys()]
+  let n = f-s+1
+  if(removePadding) {
+    n = f-s
+  }
+  let grid = [...Array(n).keys()]
   .map((v,i,a) => v+s)
   .map((v,i,a) => v*interval)
   return grid
