@@ -1,11 +1,11 @@
 const dl = new DrawLayer(document.getElementById("simulationWindow").getContext("2d"), "white", "black", "white")
 const G = 1
-let screenSize = new Vec(800, 800)
+let screenSize = new Vec(600, 600)
 let objects = []
 let lastTime = 0
 let atomicRadius = 50
 let heatingValue = 1.00
-grid = makeGrid(200, 100, 500)
+grid = makeGrid(200, 199, 400)
 for (const n of grid) {
     for (const m of grid) {
         objects.push(new Particle(new Vec(m, n), new Vec(0, 0)))
@@ -43,6 +43,14 @@ draw()
 function draw() {
     dl.reset()
     let offset = objects[0].s.scale(-1).add(screenSize.scale(0.5))
+    let g = [-1, 0, 1]
+    objects.forEach((o, i) => {
+        for(const n of g) {
+            for(const m of g) {
+            dl.drawCircle(...o.s.addXY(m*screenSize.x, n*screenSize.y), 20, "gray")
+            }
+        }
+    })
     objects.forEach((o, i) => {
         dl.drawCircle(...o.s, 20, "white")
     })
@@ -64,7 +72,7 @@ function updatePhysics(dt) {
     )
 }
 function update(t) {
-    let itt = 100
+    let itt = 200
     let dt = 0.1 / itt //(t - lastTime) / 50 //fix
     for (let i = 0; i < itt; i++) { updatePhysics(dt) }
     lastTime = t

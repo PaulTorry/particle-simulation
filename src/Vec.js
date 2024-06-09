@@ -52,12 +52,14 @@ class Vec {
     dot(a) {
         return (a.x * this.x + a.y * this.y)
     }
-    bounds(xb, yb) {
-        const x = this.x
-        const xx = (x + xb) % xb
-        const y = this.y
-        const yy = (y + yb) % yb
-        return new Vec(xx, yy)
+    bounds(x2, y2, x1 = 0, y1 = 0) {
+        const bringInside = (tx,x2,x1) => {
+            const x = tx-x1
+            const xm = x2-x1
+            const xx = (x + xm) % xm + x1
+            return xx
+        }
+        return new Vec(bringInside(this.x, x2, x1), bringInside(this.y, y2, y1))
       }
     static add(a, b) {
         return a.add(b)
