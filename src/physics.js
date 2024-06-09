@@ -1,11 +1,13 @@
 const dl = new DrawLayer(document.getElementById("simulationWindow").getContext("2d"), "white", "black", "white")
 const G = 1
-let screenSize = new Vec(600, 600)
+let screenSize = new Vec(200, 200)
+document.getElementById("simulationWindow").width = screenSize.x
+document.getElementById("simulationWindow").height = screenSize.y
 let objects = []
 let lastTime = 0
 let atomicRadius = 50
 let heatingValue = 1.00
-grid = makeGrid(200, 199, 400)
+grid = makeGrid(80, 99, 200, true)
 for (const n of grid) {
     for (const m of grid) {
         objects.push(new Particle(new Vec(m, n), new Vec(0, 0)))
@@ -39,6 +41,10 @@ document.addEventListener("keydown", (e) => {
         heatingValue = 1.001
     }
 })
+document.getElementById("simulationWindow").addEventListener("mousedown", (e) => {
+    console.log(e.offsetX, e.offsetY)
+    objects.push(new Particle(new Vec(e.offsetX, e.offsetY), new Vec(0,0)))
+})
 draw()
 function draw() {
     dl.reset()
@@ -58,9 +64,9 @@ function draw() {
     let potentialEnergy = objects.reduce((p, c, i) => p+gravitationalPotentials(objects, c.s), 0)
     //console.log(kineticEnergy)
     //console.log(gravitationalPotentials(objects, objects[0].s))
-    dl.fillText(kineticEnergy, 600, 600)
-    dl.fillText(potentialEnergy, 600, 650)
-    dl.fillText(kineticEnergy+potentialEnergy, 600, 700)
+    dl.fillText(kineticEnergy, 0, 25)
+    dl.fillText(potentialEnergy, 0, 50)
+    dl.fillText(kineticEnergy+potentialEnergy, 0, 75)
     }
 function updatePhysics(dt) {
     objects.forEach((o, i) => {
