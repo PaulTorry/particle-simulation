@@ -4,6 +4,7 @@ let screenSize = new Vec(200, 200)
 document.getElementById("simulationWindow").width = screenSize.x
 document.getElementById("simulationWindow").height = screenSize.y
 let objects = []
+let stats={}, statlog = []
 let lastTime = 0
 let atomicRadius = 50
 let heatingValue = 1.00
@@ -40,12 +41,30 @@ document.addEventListener("keydown", (e) => {
     if(e.key === "4") {
         heatingValue = 1.001
     }
+    if(e.key === "i") {
+        changeScreenSize(...screenSize.addXY(1,1))
+    }
+    if(e.key === "d") {
+        changeScreenSize(...screenSize.addXY(-1,-1))
+    }
+    if(e.key === "l") {
+        statlog.push(stats)
+        console.log(statlog)
+    }
 })
 document.getElementById("simulationWindow").addEventListener("mousedown", (e) => {
     console.log(e.offsetX, e.offsetY)
     objects.push(new Particle(new Vec(e.offsetX, e.offsetY), new Vec(0,0)))
 })
 draw()
+
+
+function changeScreenSize(x, y=x){
+    screenSize = new Vec(x, y)
+    document.getElementById("simulationWindow").width = screenSize.x
+    document.getElementById("simulationWindow").height = screenSize.y
+}
+
 function draw() {
     dl.reset()
     let offset = objects[0].s.scale(-1).add(screenSize.scale(0.5))
@@ -67,6 +86,8 @@ function draw() {
     dl.fillText(kineticEnergy, 0, 25)
     dl.fillText(potentialEnergy, 0, 50)
     dl.fillText(kineticEnergy+potentialEnergy, 0, 75)
+    dl.fillText(objects.length, 0, 125)
+    dl.fillText((kineticEnergy+potentialEnergy)/objects.length, 0, 175)
     }
 function updatePhysics(dt) {
     objects.forEach((o, i) => {
@@ -77,12 +98,26 @@ function updatePhysics(dt) {
     }
     )
 }
+
+function updateStats(){
+    stats = {
+        kE: objects.reduce((p, c, i) => p+c.kineticEnergy, 0),
+        pE: objects.reduce((p, c, i) => p+gravitationalPotentials(objects, c.s), 0)
+
+    }
+    document.getElementById("stats").innerHTML =
+     "<tr><td> n </td> <td>  " +  objects.length +  "</td></tr> " +
+     "<tr><td> PE/n </td> <td>  " +  stats.pE/objects.length +  "</td></tr> " 
+    
+}
+
 function update(t) {
     let itt = 200
     let dt = 0.1 / itt //(t - lastTime) / 50 //fix
     for (let i = 0; i < itt; i++) { updatePhysics(dt) }
     lastTime = t
         setTimeout(update, 5)
+        updateStats()
         draw()
     }
 setTimeout(update, 1)
