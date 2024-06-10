@@ -1,12 +1,12 @@
 const dl = new DrawLayer(document.getElementById("simulationWindow").getContext("2d"), "white", "black", "white")
 const G = 1
 let screenSize = new Vec(200, 200)
-document.getElementById("simulationWindow").width = screenSize.x
-document.getElementById("simulationWindow").height = screenSize.y
+changeScreenSize()
 let objects = []
 let lastTime = 0
 let atomicRadius = 50
 let heatingValue = 1.00
+let stats = {}
 grid = makeGrid(80, 99, 200, true)
 for (const n of grid) {
     for (const m of grid) {
@@ -40,6 +40,16 @@ document.addEventListener("keydown", (e) => {
     if(e.key === "4") {
         heatingValue = 1.001
     }
+    if(e.key === "i") {
+        screenSize = screenSize.addXY(1,1)
+        console.log(e.key)
+        changeScreenSize()
+    }
+    if(e.key === "d") {
+        screenSize = screenSize.addXY(-1,-1)
+        console.log(e.key)
+        changeScreenSize()
+    }
 })
 document.getElementById("simulationWindow").addEventListener("mousedown", (e) => {
     console.log(e.offsetX, e.offsetY)
@@ -64,9 +74,13 @@ function draw() {
     let potentialEnergy = objects.reduce((p, c, i) => p+gravitationalPotentials(objects, c.s), 0)
     //console.log(kineticEnergy)
     //console.log(gravitationalPotentials(objects, objects[0].s))
-    dl.fillText(kineticEnergy, 0, 25)
-    dl.fillText(potentialEnergy, 0, 50)
-    dl.fillText(kineticEnergy+potentialEnergy, 0, 75)
+    dl.fillText(kineticEnergy.toFixed(2), 0, 25)
+    dl.fillText(potentialEnergy.toFixed(2), 0, 50)
+    dl.fillText((kineticEnergy+potentialEnergy).toFixed(2), 0, 75)
+    dl.fillText(objects.length, 0, 100)
+    dl.fillText((potentialEnergy/objects.length).toFixed(2), 0, 125)
+    dl.fillText((kineticEnergy/objects.length).toFixed(2), 0, 150)
+    dl.fillText(((kineticEnergy+potentialEnergy)/objects.length).toFixed(2), 0, 175)
     }
 function updatePhysics(dt) {
     objects.forEach((o, i) => {
@@ -77,12 +91,25 @@ function updatePhysics(dt) {
     }
     )
 }
+function changeScreenSize() {
+        document.getElementById("simulationWindow").width = screenSize.x
+        document.getElementById("simulationWindow").height = screenSize.y
+}
+function calculateStats() {
+    stats = {
+        kineticEnergy: objects.reduce((p, c, i) => p+c.kineticEnergy, 0),
+        potentialEnergy: objects.reduce((p, c, i) => p+gravitationalPotentials(objects, c.s), 0)
+    }
+}
 function update(t) {
     let itt = 200
     let dt = 0.1 / itt //(t - lastTime) / 50 //fix
     for (let i = 0; i < itt; i++) { updatePhysics(dt) }
     lastTime = t
         setTimeout(update, 5)
+        calculateStats()
+        //console.log(stats)
+        document.getElementById("stats").innerHTML = "<td>" + stats.kineticEnergy.toFixed(3) + "</td>" + "    " + "<td>" + stats.potentialEnergy.toFixed(3) + "</td>"
         draw()
     }
 setTimeout(update, 1)
