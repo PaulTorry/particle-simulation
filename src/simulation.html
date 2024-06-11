@@ -18,6 +18,18 @@
 
     </canvas>
     <table id="stats"></table>
+    <button onclick="heat(1.001)">Heat slowly</button>
+    <button onclick="heat(0.999)">Cool slowly</button>
+    <button onclick="heat(0.99)">Cool quickly</button>
+    <button onclick="heat(1)">Keep constant</button>
+    <br/>
+    <button onclick="changeScreenSize(5,0)">Increase x</button>
+    <button onclick="changeScreenSize(0,5)">Increase y</button>
+    <button onclick="changeScreenSize(5,5)">Increase both</button>
+    <br/>
+    <button onclick="changeScreenSize(-5,0)">Decrease x</button>
+    <button onclick="changeScreenSize(0,-5)">Decrease y</button>
+    <button onclick="changeScreenSize(-5,-5)">Decrease both</button>
     <script src="./helper.js"></script>
     <script src="./Vec.js"></script>
     <script src="./DrawLayer.js"></script>

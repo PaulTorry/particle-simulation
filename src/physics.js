@@ -1,7 +1,7 @@
 const dl = new DrawLayer(document.getElementById("simulationWindow").getContext("2d"), "white", "black", "white")
 const G = 1
 let screenSize = new Vec(200, 200)
-changeScreenSize()
+updateCanvasSize()
 let objects = []
 let lastTime = 0
 let atomicRadius = 50
@@ -43,12 +43,12 @@ document.addEventListener("keydown", (e) => {
     if(e.key === "i") {
         screenSize = screenSize.addXY(1,1)
         console.log(e.key)
-        changeScreenSize()
+        updateCanvasSize()
     }
     if(e.key === "d") {
         screenSize = screenSize.addXY(-1,-1)
         console.log(e.key)
-        changeScreenSize()
+        updateCanvasSize()
     }
 })
 document.getElementById("simulationWindow").addEventListener("mousedown", (e) => {
@@ -91,14 +91,24 @@ function updatePhysics(dt) {
     }
     )
 }
-function changeScreenSize() {
+function heat(n) {
+    heatingValue = n
+}
+function changeScreenSize(x, y) {
+    screenSize = screenSize.addXY(x,y)
+        updateCanvasSize()
+}
+function updateCanvasSize() {
         document.getElementById("simulationWindow").width = screenSize.x
         document.getElementById("simulationWindow").height = screenSize.y
 }
 function calculateStats() {
     stats = {
-        kineticEnergy: objects.reduce((p, c, i) => p+c.kineticEnergy, 0),
-        potentialEnergy: objects.reduce((p, c, i) => p+gravitationalPotentials(objects, c.s), 0)
+        kE: objects.reduce((p, c, i) => p+c.kineticEnergy, 0),
+        pE: objects.reduce((p, c, i) => p+gravitationalPotentials(objects, c.s), 0),
+        n: objects.length,
+        x: screenSize.x,
+        y: screenSize.y,
     }
 }
 function update(t) {
@@ -109,7 +119,10 @@ function update(t) {
         setTimeout(update, 5)
         calculateStats()
         //console.log(stats)
-        document.getElementById("stats").innerHTML = "<td>" + stats.kineticEnergy.toFixed(3) + "</td>" + "    " + "<td>" + stats.potentialEnergy.toFixed(3) + "</td>"
+        document.getElementById("stats").innerHTML = "<tr><td>" + stats.kE.toFixed(3) + "</td>" + "    " + "<td>" + (stats.kE/stats.n).toFixed(3) + "</td></tr>" +
+        "<tr><td>" + stats.pE.toFixed(3) + "</td>" + "    " + "<td>" + (stats.pE/stats.n).toFixed(3) + "</td></tr>" +
+        "<tr><td>" + (stats.pE+stats.kE).toFixed(3) + "</td>" + "    " + "<td>" + ((stats.pE+stats.kE)/stats.n).toFixed(3) + "</td></tr>" +
+         "<tr><td>" + stats.x + "</td>" + "    " + "<td>" + stats.y + "</td></tr>"
         draw()
     }
 setTimeout(update, 1)
