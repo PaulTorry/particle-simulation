@@ -51,6 +51,15 @@ class DrawLayer {
         this.ctx.stroke()
         this.ctx.strokeStyle = this.defaultStroke
     }
+    drawX(x, y, size, col = this.defaultStroke) {
+        this.ctx.strokeStyle = col
+        this.ctx.beginPath()
+        this.drawLineRel(x,y,size,size)
+        this.drawLineRel(x,y,-size,size)
+        this.drawLineRel(x,y,-size,-size)
+        this.drawLineRel(x,y,size,-size)
+        this.ctx.stroke()
+    }
     drawShape(s, dontClose, col = this.defaultStroke, offset = new Vec(0,0)) {
         this.ctx.strokeStyle = col
         this.ctx.beginPath()

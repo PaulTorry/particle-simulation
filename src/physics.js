@@ -7,6 +7,7 @@ let lastTime = 0
 let atomicRadius = 50
 let heatingValue = 1.00
 let stats = {}
+let datalog = []
 grid = makeGrid(80, 99, 200, true)
 for (const n of grid) {
     for (const m of grid) {
@@ -69,6 +70,7 @@ function draw() {
     })
     objects.forEach((o, i) => {
         dl.drawCircle(...o.s, 20, "white")
+        dl.drawX(...o.s, 20, "white")
     })
     let kineticEnergy = objects.reduce((p, c, i) => p+c.kineticEnergy, 0)
     let potentialEnergy = objects.reduce((p, c, i) => p+gravitationalPotentials(objects, c.s), 0)
@@ -97,6 +99,9 @@ function heat(n) {
 function changeScreenSize(x, y) {
     screenSize = screenSize.addXY(x,y)
         updateCanvasSize()
+}
+function logStats() {
+    datalog.push([stats.x, (stats.pE/stats.n)])
 }
 function updateCanvasSize() {
         document.getElementById("simulationWindow").width = screenSize.x
