@@ -10,6 +10,8 @@ let heatingValue = 1.00
 let stats = {}
 let datalog = []
 let data = [[100, 5], [150, 10], [200, 15]]
+let radii = []
+let frequency = new Array(200).fill(0)
 let graphScale = {xshift: -50, xstretch: 0.5, yshift: 150, ystretch: -5}
 grid = makeGrid(80, 99, 200, true)
 for (const n of grid) {
@@ -64,8 +66,19 @@ function draw() {
     dl.reset()
     gl.reset()
     gl.drawCircle(120, 140, 20, "white")
-    data.map((v, i, a) => [v[0] * graphScale.xstretch + graphScale.xshift, v[1] * graphScale.ystretch + graphScale.yshift]).
-        forEach((v, i, a) => gl.drawX(v[0], v[1], 20, "white"))
+    //datalog.map((v, i, a) => [v[0] * graphScale.xstretch + graphScale.xshift, v[1] * graphScale.ystretch + graphScale.yshift]).
+        //forEach((v, i, a) => gl.drawX(v[0], v[1], 10, "white"))
+        objects.forEach((v, i, a) => objects.forEach((vv, ii, aa) => {
+            radii.push(v.s.subtract(vv.s).mag)
+        }))
+        //console.log(radii.map((v, i, a) => Math.round(v)))
+        radii = radii.map(Math.round)
+        frequency = new Array(200).fill(0)
+        radii.forEach((v, i, a) => {
+            frequency[v] = frequency[v]+1
+        })
+        console.log(frequency)
+        //console.log(radii)
     let offset = objects[0].s.scale(-1).add(screenSize.scale(0.5))
     let g = [-1, 0, 1]
     objects.forEach((o, i) => {
