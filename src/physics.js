@@ -68,6 +68,7 @@ function draw() {
     gl.drawCircle(120, 140, 20, "white")
     //datalog.map((v, i, a) => [v[0] * graphScale.xstretch + graphScale.xshift, v[1] * graphScale.ystretch + graphScale.yshift]).
         //forEach((v, i, a) => gl.drawX(v[0], v[1], 10, "white"))
+        radii = []
         objects.forEach((v, i, a) => objects.forEach((vv, ii, aa) => {
             radii.push(v.s.subtract(vv.s).mag)
         }))
@@ -78,6 +79,8 @@ function draw() {
             frequency[v] = frequency[v]+1
         })
         console.log(frequency)
+        lineToDraw = frequency.map((v, i, a) => new Vec(i, screenSize.y-v*10))
+        gl.drawShape(lineToDraw, true)
         //console.log(radii)
     let offset = objects[0].s.scale(-1).add(screenSize.scale(0.5))
     let g = [-1, 0, 1]
